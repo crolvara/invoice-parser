@@ -12,6 +12,11 @@ describe("round2 (HALF_UP)", () => {
     expect(round2(9.68)).toBe(9.68);
     expect(round2(-2.5)).toBe(-2.5);
   });
+
+  it("normalizes negative zero to +0 (never displays as -$0.00)", () => {
+    expect(Object.is(round2(-0.001), 0)).toBe(true);
+    expect(Object.is(convertAmount(-0.004, 0.5), 0)).toBe(true);
+  });
 });
 
 describe("convertAmount", () => {

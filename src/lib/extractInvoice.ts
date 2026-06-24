@@ -67,7 +67,9 @@ export async function extractInvoice(pdfBase64: string): Promise<RawExtraction> 
   try {
     response = await getClient().messages.parse({
       model: MODEL,
-      max_tokens: 4096,
+      // Headroom for invoices with many line items; billed on actual output,
+      // so this is free for small invoices and avoids truncating large ones.
+      max_tokens: 8192,
       messages: [
         {
           role: "user",
